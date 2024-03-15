@@ -7,7 +7,7 @@ import io
 app = Flask(__name__)
 
 model_path = 'model.h5'
-model = load_model(model_path)
+model = None
 class_labels = {
     0: 'Apple___Apple_scab',
     1: 'Apple___Black_rot',
@@ -49,6 +49,11 @@ class_labels = {
     37: 'Tomato__healthy'
 }
 
+def load_model_if_necessary():
+    global model
+    if model is None:
+        model = load_model(model_path)
+
 @app.route('/')
 def home():
     return render_template('index.html')
@@ -56,6 +61,7 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
+        load_model_if_necessary()
         if 'image' not in request.files:
             return 'No file part'
         
