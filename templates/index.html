@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Input Form</title>
+    <title>GreenGuardian</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
         body {
@@ -95,7 +95,6 @@
         <h1>Select an Image</h1>
         <form id="uploadForm" action="/predict" method="POST" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="image"><b>Choose an image:</b></label><br>
                 <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required><br>
                 <div id="imagePreview"></div>
             </div>
