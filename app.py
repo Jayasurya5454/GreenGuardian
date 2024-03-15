@@ -56,31 +56,25 @@ def home():
 @app.route('/predict', methods=['POST'])
 def predict():
     if request.method == 'POST':
-        # Check if the post request has the file part
         if 'image' not in request.files:
             return 'No file part'
         
         file = request.files['image']
 
-        # If the user does not select a file, the browser submits an empty file without a filename
         if file.filename == '':
             return 'No selected file'
 
         try:
-            # Read image file from memory
-            img = image.load_img(io.BytesIO(file.read()), target_size=(100, 100))  # Resize the image to match the model input shape
+            img = image.load_img(io.BytesIO(file.read()), target_size=(100, 100))  
             img_array = image.img_to_array(img)
             img_array = np.expand_dims(img_array, axis=0)
             img_array /= 255.0
 
-            # Make predictions using the loaded model
             predictions = model.predict(img_array)
 
-            # Get the predicted class index and corresponding class label
             predicted_class_index = np.argmax(predictions)
             predicted_class_label = class_labels[predicted_class_index]
 
-            # Render the result.html template with the prediction data
             return render_template('result.html', predicted_class=predicted_class_label)
         except Exception as e:
             return str(e)
