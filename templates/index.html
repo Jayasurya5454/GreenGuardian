@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Input Form</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            background-image: url('https://source.unsplash.com/random/1600x900?agriculture');
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-size: cover;
+        }
+        .container {
+            width: 490px;
+            padding: 40px;
+            background-color: rgba(255, 255, 255, 0.8);
+            margin: 100px auto;
+            border-radius: 20px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+        h1 {
+            color: #333;
+            margin-bottom: 20px;
+            font-size: 28px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        label {
+            font-size: 18px;
+            color: #555;
+            display: block;
+            margin-bottom: 15px;
+            text-align: left;
+        }
+        input[type=file] {
+            width: calc(100% - 24px);
+            padding: 12px;
+            margin: 8px 0 20px;
+            display: inline-block;
+            border: none;
+            border-radius: 10px;
+            box-sizing: border-box;
+            background-color: #f9f9f9;
+            outline:none;
+            transition: background-color 0.3s, box-shadow 0.3s;
+        }
+        input[type=file]:hover, input[type=file]:focus {
+            background-color: #e6e6e6;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        input[type=file]::-webkit-file-upload-button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        input[type=file]::-webkit-file-upload-button:hover {
+            background-color: #45a049;
+        }
+        input[type=submit] {
+            background-color: #007bff;
+            color: white;
+            padding: 14px 40px;
+            margin-top: 20px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        input[type=submit]:hover {
+            background-color: #0056b3;
+        }
+        #imagePreview {
+            margin-top: 20px;
+            position: relative;
+        }
+        #imagePreview img {
+            max-width: 100%;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Select an Image</h1>
+        <form id="uploadForm" action="/predict" method="POST" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="image"><b>Choose an image:</b></label><br>
+                <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required><br>
+                <div id="imagePreview"></div>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Upload">
+        </form>
+    </div>
+    <script>
+        document.getElementById('image').addEventListener('change', function() {
+            var file = this.files[0];
+            if (file) {
+                var reader = new FileReader();
+                reader.onload = function(event) {
+                    var imagePreview = document.getElementById('imagePreview');
+                    imagePreview.innerHTML = '<img src="' + event.target.result + '" alt="Preview">';
+                    imagePreview.style.display = 'block';
+                }
+                reader.readAsDataURL(file);
+            } else {
+                document.getElementById('imagePreview').style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
