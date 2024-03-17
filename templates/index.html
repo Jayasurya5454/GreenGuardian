@@ -91,12 +91,14 @@
     </style>
 </head>
 <body>
+    <script>alert("Our application is under development as of now only pridict disease in Tomato, Blueberry, Cherry, Corn, Grape, Peach, Pepper, Potato, Raspberry, Soybean, Squash")</script>
     <div class="container">
         <h1>Select an Image</h1>
         <form id="uploadForm" action="/predict" method="POST" enctype="multipart/form-data">
             <div class="form-group">
                 <input type="file" class="form-control-file" id="image" name="image" accept="image/*" required><br>
                 <div id="imagePreview"></div>
+                <p>Only selecting a plant leaf, anything else may lead to misclassification.</p>
             </div>
             <input type="submit" class="btn btn-primary" value="Upload">
         </form>
