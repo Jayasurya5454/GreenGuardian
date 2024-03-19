@@ -2,12 +2,14 @@ from flask import Flask, render_template, request, jsonify
 from tensorflow.keras.preprocessing import image
 from tensorflow.keras.models import load_model
 import numpy as np
+import gemini_api as gem
 import io
 
 app = Flask(__name__)
 
 model_path = 'model.h5'
 model = None
+predicted_class_label=""
 class_labels = {
     0: 'Apple___Apple_scab',
     1: 'Apple___Black_rot',
@@ -75,14 +77,17 @@ def predict():
             img_array = image.img_to_array(img)
             img_array = np.expand_dims(img_array, axis=0)
             img_array /= 255.0
-
+    #model is running da wait da 
             predictions = model.predict(img_array)
-
+            global predicted_class_label
             predicted_class_index = np.argmax(predictions)
             predicted_class_label = class_labels[predicted_class_index]
 
             return render_template('result.html', predicted_class=predicted_class_label)
         except Exception as e:
             return str(e)
-
-
+@app.route('/trigger_function1')
+def trigger_function1():
+    global predicted_class_label
+    details=gem.mainn(predicted_class_label)
+    return details
