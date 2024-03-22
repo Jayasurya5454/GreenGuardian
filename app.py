@@ -4,7 +4,6 @@ from tensorflow.keras.models import load_model
 import numpy as np
 import gemini_api as gem
 import io
-from pymongo import MongoClient
 
 app = Flask(__name__)
 
