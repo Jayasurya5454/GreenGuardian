@@ -12,8 +12,7 @@ def format_text(text):
 
 def mainn(predicted_class_label):
     model = genai.GenerativeModel('gemini-pro')
-    k = f"In my land i found this {predicted_class_label} disease so instruct me to cure the disease give content in points ."
-    response = model.generate_content(k)
+    response = model.generate_content(predicted_class_label)
 
     formatted_content = format_text(response.text)
     return formatted_content

@@ -4,6 +4,7 @@ from tensorflow.keras.models import load_model
 import numpy as np
 import gemini_api as gem
 import io
+from pymongo import MongoClient
 
 app = Flask(__name__)
 
@@ -77,7 +78,7 @@ def predict():
             img_array = image.img_to_array(img)
             img_array = np.expand_dims(img_array, axis=0)
             img_array /= 255.0
-    #model is running da wait da 
+    
             predictions = model.predict(img_array)
             global predicted_class_label
             predicted_class_index = np.argmax(predictions)
@@ -89,5 +90,14 @@ def predict():
 @app.route('/trigger_function1')
 def trigger_function1():
     global predicted_class_label
-    details=gem.mainn(predicted_class_label)
+    k = f"In my land i found this {predicted_class_label} disease so instruct me to cure the disease give content  and also give which stage this will a disease accur and give Resistant Varieties,Management,organic control,and mention the disease stage all should be  in points ."
+    details=gem.mainn(k)
     return details
+@app.route('/chat', methods=['POST'])
+def chat():
+    user_message = request.form['user_message']
+    user_messages=f"give content about{user_message} in two lines."
+    response_message=gem.mainn(user_messages)
+    return jsonify({'response': response_message})
+
+    
